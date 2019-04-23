@@ -6,24 +6,25 @@ class Button extends React.Component {
     //need when access using this.context
     //static contextType = LanguageContext;
 
-    renderSubmit(value) {
-        return value === 'english'?'Submit':'Voorleggen';
+    renderSubmit(language) {
+        return language === 'english'?'Submit':'Voorleggen';
+    }
+
+    renderButton(color){
+        return (
+            <button className={`ui button ${color}`}>
+                <LanguageContext.Consumer>
+                    {({language})=>this.renderSubmit(language)}
+                </LanguageContext.Consumer>
+            </button>
+        )
     }
     render(){
         //need when defined contextType.
        // const text = this.context === 'english'?'Submit': 'Voorleggen';
         return (
             <ColorContext.Consumer>
-                {(color)=>
-                    <button className={`ui button ${color}`}>
-                        <LanguageContext.Consumer>
-                            {/**A child: automatically called by consumer 
-                            with current value inside the context object. as first argument */}
-                            {(value)=>this.renderSubmit(value)}
-                        </LanguageContext.Consumer>
-                    </button>                          
-                }
-            
+                {(color)=> this.renderButton(color)}                      
             </ColorContext.Consumer>
 
         );
